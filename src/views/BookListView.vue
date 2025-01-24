@@ -1,9 +1,9 @@
 <template>
-  <h1>Hello from Home page!</h1>
+  <h1>Hello from Book list page!</h1>
 </template>
 
 <script>
 export default {
-  name: "HomeView",
+  name: "BookListView",
 };
 </script>
