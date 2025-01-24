@@ -19,6 +19,12 @@ const routes = [
     path: "/books",
     name: "book-list",
     component: BookListView,
+    children: [
+      {
+        path: "add",
+        component: NotFoundView, //TODO: Change with actual form component
+      },
+    ],
   },
   {
     path: "/books/:id",
