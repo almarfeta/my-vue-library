@@ -9,7 +9,7 @@
         class="btn btn-outline-primary btn-sm me-2"
         @click="goToDetails()"
       >
-        <i class="bi bi-box-arrow-up-right"></i> More
+        <i class="bi bi-box-arrow-up-right"></i> Read
       </button>
       <button
         class="btn btn-outline-warning btn-sm me-2"

@@ -14,6 +14,7 @@
 
 <script>
 import ListComponent from "@/components/ListComponent.vue";
+import BookService from "@/services/BookService";
 
 export default {
   name: "BookListView",
@@ -22,12 +23,11 @@ export default {
   },
   data() {
     return {
-      books: [
-        { id: 1, title: "Harap-Alb", author: "Ion Creanga" },
-        { id: 2, title: "Ion", author: "Liviu Rebreanu" },
-        { id: 3, title: "Moara cu Noroc", author: "Ioan Slavici" },
-      ],
+      books: [],
     };
+  },
+  created() {
+    this.books = BookService.getBooks();
   },
 };
 </script>
