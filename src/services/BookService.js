@@ -25,6 +25,10 @@ export default {
     return this.getBooks().find((book) => book.id === id) || null;
   },
 
+  findLastId() {
+    return Math.max(...this.getBooks().map((book) => book.id));
+  },
+
   populate() {
     localStorage.setItem(
       "books",

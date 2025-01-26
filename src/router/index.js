@@ -4,6 +4,7 @@ import HomeView from "../views/HomeView.vue";
 import BookListView from "@/views/BookListView.vue";
 import BookDetailsView from "@/views/BookDetailsView.vue";
 import NotFoundView from "@/views/NotFoundView.vue";
+import FormComponent from "@/components/FormComponent.vue";
 
 const routes = [
   {
@@ -22,7 +23,12 @@ const routes = [
     children: [
       {
         path: "add",
-        component: NotFoundView, //TODO: Change with actual form component
+        component: FormComponent,
+      },
+      {
+        path: "edit/:id",
+        component: FormComponent,
+        props: true,
       },
     ],
   },
