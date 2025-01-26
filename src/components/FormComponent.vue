@@ -12,7 +12,11 @@
             class="form-control"
             v-model="form.title"
             required
+            :class="{ 'is-invalid': errors.title }"
           />
+          <div v-if="errors.title" class="invalid-feedback">
+            {{ errors.title }}
+          </div>
         </div>
 
         <div class="mb-3">
@@ -23,7 +27,11 @@
             class="form-control"
             v-model="form.author"
             required
+            :class="{ 'is-invalid': errors.author }"
           />
+          <div v-if="errors.author" class="invalid-feedback">
+            {{ errors.author }}
+          </div>
         </div>
 
         <div class="mb-3">
@@ -34,7 +42,11 @@
             class="form-control"
             v-model="form.publishDate"
             required
+            :class="{ 'is-invalid': errors.publishDate }"
           />
+          <div v-if="errors.publishDate" class="invalid-feedback">
+            {{ errors.publishDate }}
+          </div>
         </div>
 
         <div class="mb-3">
@@ -44,7 +56,12 @@
             class="form-control"
             rows="4"
             v-model="form.description"
+            required
+            :class="{ 'is-invalid': errors.description }"
           ></textarea>
+          <div v-if="errors.description" class="invalid-feedback">
+            {{ errors.description }}
+          </div>
         </div>
 
         <div class="mb-3">
@@ -54,7 +71,12 @@
             id="pdfUrl"
             class="form-control"
             v-model="form.pdfUrl"
+            required
+            :class="{ 'is-invalid': errors.pdfUrl }"
           />
+          <div v-if="errors.pdfUrl" class="invalid-feedback">
+            {{ errors.pdfUrl }}
+          </div>
         </div>
 
         <div class="d-flex justify-content-end">
@@ -89,6 +111,7 @@ export default {
         pdfUrl: "",
       },
       mode: "add",
+      errors: {},
     };
   },
   mounted() {
@@ -100,7 +123,34 @@ export default {
     this.mode = "update";
   },
   methods: {
+    validateForm() {
+      this.errors = {};
+
+      if (!this.form.title.trim()) {
+        this.errors.title = "Title is required.";
+      }
+      if (!this.form.author.trim()) {
+        this.errors.author = "Author is required.";
+      }
+      if (!this.form.publishDate) {
+        this.errors.publishDate = "Publish date is required.";
+      }
+      if (!this.form.description.trim()) {
+        this.errors.description = "Description is required.";
+      }
+      if (!this.form.pdfUrl.trim()) {
+        this.errors.pdfUrl = "PDF URL is required.";
+      } else if (!/^https?:\/\/\S*\.pdf$/.test(this.form.pdfUrl)) {
+        this.errors.pdfUrl = "Please enter a valid PDF URL.";
+      }
+
+      return Object.keys(this.errors).length === 0;
+    },
     onSubmit() {
+      if (!this.validateForm()) {
+        return;
+      }
+
       if (this.mode === "add") {
         this.form.id = BookService.findLastId() + 1;
       }
@@ -116,6 +166,15 @@ export default {
 </script>
 
 <style scoped>
+.is-invalid {
+  border-color: #dc3545;
+}
+
+.invalid-feedback {
+  color: #dc3545;
+  font-size: 0.875em;
+}
+
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -135,6 +194,8 @@ export default {
   border-radius: 8px;
   max-width: 500px;
   width: 100%;
+  max-height: 95%;
+  overflow: auto;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 </style>
