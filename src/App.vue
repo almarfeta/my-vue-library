@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <NavBarComponent />
+    <NavBarComponent :show-header="showHeaderFooter" />
     <router-view />
-    <FooterComponent />
+    <FooterComponent :show-footer="showHeaderFooter" />
   </div>
 </template>
 
@@ -15,6 +15,11 @@ export default {
   components: {
     NavBarComponent,
     FooterComponent,
+  },
+  computed: {
+    showHeaderFooter() {
+      return this.$route.name !== "login";
+    },
   },
 };
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav v-if="showHeader" class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">MyVueLibrary</a>
 
@@ -23,6 +23,14 @@
           <li class="nav-item">
             <router-link to="/books" class="nav-link">Books</router-link>
           </li>
+          <li class="nav-item">
+            <button
+              class="nav-link btn btn-outline-danger"
+              @click="handleLogout"
+            >
+              Log Out
+            </button>
+          </li>
         </ul>
       </div>
     </div>
@@ -30,8 +38,23 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
   name: "NavBarComponent",
+  props: {
+    showHeader: {
+      type: Boolean,
+      default: true,
+    },
+  },
+  methods: {
+    ...mapActions("users", ["logOut"]),
+    handleLogout() {
+      this.logOut();
+      this.$router.push("/login");
+    },
+  },
 };
 </script>
 

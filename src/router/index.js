@@ -5,8 +5,15 @@ import BookListView from "@/views/BookListView.vue";
 import BookDetailsView from "@/views/BookDetailsView.vue";
 import NotFoundView from "@/views/NotFoundView.vue";
 import FormComponent from "@/components/FormComponent.vue";
+import LoginView from "@/views/LoginView.vue";
+import store from "@/store";
 
 const routes = [
+  {
+    path: "/login",
+    name: "login",
+    component: LoginView,
+  },
   {
     path: "/",
     name: "home",
@@ -48,6 +55,15 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  const isAuthenticated = store.getters["users/isAuthenticated"];
+  if (to.name !== "login" && !isAuthenticated) {
+    next({ name: "login" });
+  } else {
+    next();
+  }
 });
 
 export default router;
