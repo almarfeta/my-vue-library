@@ -1,15 +1,15 @@
 <template>
   <li class="list-group-item d-flex justify-content-between align-items-center">
     <span>
-      <strong>{{ item.title }}</strong> - {{ item.author }}
+      <slot name="title"></slot>
     </span>
 
     <span class="buttons-container">
       <button
         class="btn btn-outline-primary btn-sm me-2"
-        @click="goToDetails()"
+        @click="emitGoToDetailsEvent()"
       >
-        <i class="bi bi-box-arrow-up-right"></i> Read
+        <i class="bi bi-box-arrow-up-right"></i> Details
       </button>
       <button
         class="btn btn-outline-warning btn-sm me-2"
@@ -34,8 +34,8 @@ export default {
     },
   },
   methods: {
-    goToDetails() {
-      this.$router.push(`/books/${this.item.id}`);
+    emitGoToDetailsEvent() {
+      this.$emit("details", this.item);
     },
     emitEditEvent() {
       this.$emit("edit", this.item);
@@ -53,7 +53,7 @@ export default {
   border-bottom: 1px solid #ddd;
 }
 
-@media (max-width: 576px) {
+@media (max-width: 800px) {
   .buttons-container {
     display: flex;
     flex-direction: column;
