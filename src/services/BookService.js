@@ -26,6 +26,10 @@ export default {
   },
 
   findLastId() {
-    return Math.max(...this.getBooks().map((book) => book.id));
+    const books = this.getBooks();
+    if (books.length > 0) {
+      return Math.max(...books.map((book) => book.id));
+    }
+    return 0;
   },
 };

@@ -29,7 +29,7 @@ import BookService from "@/services/BookService";
 import CardComponent from "@/components/CardComponent.vue";
 
 export default {
-  name: "BookDetailsViewView",
+  name: "BookDetailsView",
   components: { CardComponent },
   props: ["id"],
   data() {

@@ -151,10 +151,6 @@ export default {
         return;
       }
 
-      if (this.mode === "add") {
-        this.form.id = BookService.findLastId() + 1;
-      }
-
       this.$emit(this.mode, this.form);
       this.closeModal();
     },

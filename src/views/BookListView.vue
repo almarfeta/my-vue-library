@@ -30,7 +30,7 @@
 
 <script>
 import ListComponent from "@/components/ListComponent.vue";
-import BookService from "@/services/BookService";
+import { mapGetters } from "vuex";
 
 export default {
   name: "BookListView",
@@ -40,11 +40,13 @@ export default {
   data() {
     return {
       searchQueryPlaceholder: "Search books by title...",
-      books: [],
     };
   },
+  computed: {
+    ...mapGetters("books", { books: "allBooks" }),
+  },
   created() {
-    this.books = BookService.getBooks();
+    this.$store.dispatch("books/fetchBooks");
   },
   methods: {
     openAddBookModal() {
@@ -57,16 +59,13 @@ export default {
       this.$router.push(`/books/${$event.id}`);
     },
     handleAdd($event) {
-      BookService.addBook($event);
-      this.books = BookService.getBooks();
+      this.$store.dispatch("books/addBook", $event);
     },
     handleUpdate($event) {
-      BookService.updateBook($event);
-      this.books = BookService.getBooks();
+      this.$store.dispatch("books/updateBook", $event);
     },
     handleDelete($event) {
-      BookService.deleteBook($event.id);
-      this.books = BookService.getBooks();
+      this.$store.dispatch("books/deleteBook", $event.id);
     },
   },
 };
